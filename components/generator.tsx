@@ -14,15 +14,58 @@ export function Generator() {
   const [prompt, setPrompt] = useState("")
   const [isGenerating, setIsGenerating] = useState(false)
   const [output, setOutput] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const compressImage = (file: File, maxWidth: number = 800, quality: number = 0.8): Promise<string> => {
+    return new Promise((resolve) => {
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')!
+      const img = new Image()
+      
+      img.onload = () => {
+        // Calculate new dimensions
+        let { width, height } = img
+        if (width > height) {
+          if (width > maxWidth) {
+            height = (height * maxWidth) / width
+            width = maxWidth
+          }
+        } else {
+          if (height > maxWidth) {
+            width = (width * maxWidth) / height
+            height = maxWidth
+          }
+        }
+        
+        canvas.width = width
+        canvas.height = height
+        
+        // Draw and compress
+        ctx.drawImage(img, 0, 0, width, height)
+        const compressedDataUrl = canvas.toDataURL('image/jpeg', quality)
+        resolve(compressedDataUrl)
+      }
+      
+      img.src = URL.createObjectURL(file)
+    })
+  }
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
-      const reader = new FileReader()
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string)
+      try {
+        // Compress the image before setting preview
+        const compressedImage = await compressImage(file, 800, 0.8)
+        setImagePreview(compressedImage)
+      } catch (error) {
+        console.error('Error compressing image:', error)
+        // Fallback to original method
+        const reader = new FileReader()
+        reader.onloadend = () => {
+          setImagePreview(reader.result as string)
+        }
+        reader.readAsDataURL(file)
       }
-      reader.readAsDataURL(file)
     }
   }
 
@@ -31,6 +74,7 @@ export function Generator() {
 
     setIsGenerating(true)
     setOutput(null)
+    setError(null)
 
     try {
       const response = await fetch("/api/process-image", {
@@ -49,9 +93,11 @@ export function Generator() {
       if (response.ok) {
         setOutput(data.result)
       } else {
+        setError(data.error || "Generation failed")
         console.error("Error:", data.error)
       }
     } catch (error) {
+      setError("Network error or image too large. Please try a smaller image.")
       console.error("Failed to generate:", error)
     } finally {
       setIsGenerating(false)
@@ -102,7 +148,7 @@ export function Generator() {
                       <>
                         <Upload className="w-12 h-12 mx-auto text-muted-foreground mb-2" />
                         <p className="text-sm text-muted-foreground">Add Image</p>
-                        <p className="text-xs text-muted-foreground mt-1">Max 10MB</p>
+                        <p className="text-xs text-muted-foreground mt-1">Auto-compressed for deployment</p>
                       </>
                     )}
                   </label>
@@ -138,7 +184,15 @@ export function Generator() {
             <p className="text-sm text-muted-foreground mb-6">Your ultra-fast AI creations appear here instantly</p>
 
             <div className="border-2 border-dashed border-border rounded-lg p-12 text-center min-h-[300px] flex flex-col items-center justify-center overflow-hidden">
-              {output ? (
+              {error ? (
+                <div className="w-full flex items-center justify-center">
+                  <div className="text-center p-4 bg-red-50 border border-red-200 rounded-lg">
+                    <span className="text-2xl mb-2 block">⚠️</span>
+                    <p className="text-red-800 font-medium mb-2">Generation Failed</p>
+                    <p className="text-red-600 text-sm">{error}</p>
+                  </div>
+                </div>
+              ) : output ? (
                 <div className="w-full h-full flex items-center justify-center">
                   {/* Check if output is a direct URL or contains a markdown image/URL */}
                   {(() => {

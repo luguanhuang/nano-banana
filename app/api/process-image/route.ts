@@ -32,6 +32,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Missing prompt or image' }, { status: 400 });
     }
 
+    // Check image size (Base64 encoded size)
+    const imageSizeInBytes = (image.length * 3) / 4; // Approximate size of base64 decoded data
+    const maxSizeInMB = 3; // Conservative limit for Vercel
+    if (imageSizeInBytes > maxSizeInMB * 1024 * 1024) {
+      return NextResponse.json({ 
+        error: `Image too large. Please use an image smaller than ${maxSizeInMB}MB.` 
+      }, { status: 413 });
+    }
+
     const apiKey = process.env.OPENROUTER_API_KEY;
     if (!apiKey) {
       console.error("OPENROUTER_API_KEY is missing in environment variables.");
