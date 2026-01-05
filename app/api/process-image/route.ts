@@ -32,6 +32,19 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Missing prompt or image' }, { status: 400 });
     }
 
+    // Check user authentication and usage limits
+    const usageResponse = await fetch(`${req.nextUrl.origin}/api/usage/check`, {
+      method: 'POST',
+      headers: {
+        'Cookie': req.headers.get('Cookie') || '',
+      },
+    });
+
+    if (!usageResponse.ok) {
+      const usageError = await usageResponse.json();
+      return NextResponse.json(usageError, { status: usageResponse.status });
+    }
+
     // Check image size (Base64 encoded size)
     const imageSizeInBytes = (image.length * 3) / 4; // Approximate size of base64 decoded data
     const maxSizeInMB = 3; // Conservative limit for Vercel
