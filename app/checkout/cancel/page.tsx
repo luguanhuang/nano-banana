@@ -36,7 +36,7 @@ export default function CheckoutCancelPage() {
 
           <div className="text-xs text-muted-foreground">
             <p>
-              Need help? <Link href="/support" className="text-primary hover:underline">Contact Support</Link>
+              Need help? <a href="mailto:nanobanana@lghuang.xyz" className="text-primary hover:underline">Contact Support</a>
             </p>
           </div>
         </div>

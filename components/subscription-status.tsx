@@ -22,6 +22,7 @@ interface SubscriptionData {
 export function SubscriptionStatus() {
   const [subscription, setSubscription] = useState<SubscriptionData | null>(null)
   const [loading, setLoading] = useState(true)
+  const [cancelling, setCancelling] = useState(false)
 
   useEffect(() => {
     fetchSubscriptionStatus()
@@ -38,6 +39,34 @@ export function SubscriptionStatus() {
       console.error('Error fetching subscription:', error)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleCancelSubscription = async () => {
+    if (!confirm('Are you sure you want to cancel your subscription? This action cannot be undone.')) {
+      return
+    }
+
+    setCancelling(true)
+    try {
+      const response = await fetch('/api/subscription/cancel', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+
+      if (response.ok) {
+        alert('Your subscription has been cancelled successfully.')
+        fetchSubscriptionStatus() // Refresh the status
+      } else {
+        alert('Failed to cancel subscription. Please contact support.')
+      }
+    } catch (error) {
+      console.error('Error cancelling subscription:', error)
+      alert('Failed to cancel subscription. Please contact support.')
+    } finally {
+      setCancelling(false)
     }
   }
 
@@ -139,9 +168,16 @@ export function SubscriptionStatus() {
             </Button>
           )}
           {subscription.isActive && subscription.plan !== 'free' && (
-            <Button variant="outline" className="flex-1">
-              Manage Subscription
-            </Button>
+            <>
+              <Button variant="outline" className="flex-1" asChild>
+                <Link href="https://creem.io/customer-portal" target="_blank" rel="noopener noreferrer">
+                  Manage Subscription
+                </Link>
+              </Button>
+              <Button variant="destructive" className="flex-1" onClick={handleCancelSubscription} disabled={cancelling}>
+                {cancelling ? 'Cancelling...' : 'Cancel Subscription'}
+              </Button>
+            </>
           )}
         </div>
       </CardContent>

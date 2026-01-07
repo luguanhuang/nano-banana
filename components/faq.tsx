@@ -4,7 +4,7 @@ const faqs = [
   {
     question: "What is Nano Banana?",
     answer:
-      "It's a revolutionary AI image editing model that transforms photos using natural language prompts. This is currently the most powerful image editing model available, with exceptional consistency. It offers superior performance compared to Flux Kontext for consistent character editing and scene preservation.",
+      "It's an advanced AI image editing model that transforms photos using natural language prompts. Our model focuses on exceptional consistency and precise editing capabilities.",
   },
   {
     question: "How does it work?",
@@ -12,9 +12,9 @@ const faqs = [
       'Simply upload an image and describe your desired edits in natural language. The AI understands complex instructions like "place the creature in a snowy mountain" or "imagine the whole face and create it". It processes your text prompt and generates perfectly edited images.',
   },
   {
-    question: "How is it better than Flux Kontext?",
+    question: "How does it compare to other models?",
     answer:
-      'This model excels in character consistency, scene blending, and one-shot editing. Users report it "completely destroys" Flux Kontext in preserving facial features and seamlessly integrating edits with backgrounds. It also supports multi-image context, making it ideal for creating consistent AI influencers.',
+      "Nano Banana is optimized specifically for character consistency and scene blending. It creates natural-looking edits while preserving the identity of subjects, making it highly effective for professional workflows.",
   },
   {
     question: "Can I use it for commercial projects?",

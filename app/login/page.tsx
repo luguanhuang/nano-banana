@@ -53,7 +53,7 @@ export default function LoginPage() {
           </Button>
           
           <div className="text-center text-sm text-muted-foreground">
-            By signing in, you agree to our Terms of Service and Privacy Policy
+            By signing in, you agree to our <a href="/terms-of-service" className="underline hover:text-foreground">Terms of Service</a> and <a href="/privacy-policy" className="underline hover:text-foreground">Privacy Policy</a>
           </div>
         </CardContent>
       </Card>

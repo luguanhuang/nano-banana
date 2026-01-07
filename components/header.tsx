@@ -26,9 +26,6 @@ export function Header() {
           <Link href="/pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             Pricing
           </Link>
-          <Link href="#reviews" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            Reviews
-          </Link>
           <Link href="#faq" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             FAQ
           </Link>

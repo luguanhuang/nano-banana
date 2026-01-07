@@ -7,7 +7,7 @@ export function Hero() {
       <div className="container mx-auto text-center max-w-4xl">
         <div className="inline-flex items-center gap-2 bg-accent/50 text-accent-foreground px-4 py-2 rounded-full text-sm mb-8 border border-accent">
           <span className="text-lg">🍌</span>
-          <span className="font-medium">The AI model that outperforms Flux Kontext</span>
+          <span className="font-medium">Advanced AI Image Editor</span>
           <Link href="#generator" className="text-foreground font-semibold hover:underline">
             Try Now →
           </Link>
@@ -16,8 +16,8 @@ export function Hero() {
         <h1 className="text-5xl md:text-7xl font-bold mb-6 text-balance leading-tight">Nano Banana</h1>
 
         <p className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-3xl mx-auto text-pretty leading-relaxed">
-          Transform any image with simple text prompts. Nano-banana's advanced model delivers consistent character
-          editing and scene preservation that surpasses Flux Kontext. Experience the future of AI image editing.
+          Transform any image with simple text prompts. Nano Banana's advanced AI model delivers consistent character
+          editing and scene preservation. Experience the future of AI image editing.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

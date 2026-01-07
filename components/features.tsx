@@ -17,7 +17,7 @@ const features = [
   {
     icon: Layers,
     title: "Scene Preservation",
-    description: "Seamlessly blend edits with original backgrounds. Superior scene fusion compared to Flux Kontext",
+    description: "Seamlessly blend edits with original backgrounds. Advanced scene fusion technology",
   },
   {
     icon: Zap,
@@ -45,7 +45,7 @@ export function Features() {
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-balance">Core Features</h2>
           <p className="text-xl text-muted-foreground">Why Choose Nano Banana?</p>
           <p className="text-muted-foreground mt-2 max-w-3xl mx-auto text-pretty">
-            Nano-banana is the most advanced AI image editor on LMArena. Revolutionize your photo editing with natural
+            Nano Banana is a powerful AI image editor. Revolutionize your photo editing with natural
             language understanding
           </p>
         </div>

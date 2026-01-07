@@ -8,6 +8,7 @@ import { Switch } from '@/components/ui/switch'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Check, Zap, Crown, Rocket, Star, Sparkles, X, Flame } from 'lucide-react'
 import { useAuth } from '@/components/auth/auth-provider'
+import { Header } from "@/components/header"
 
 interface PricingPlan {
   id: string
@@ -205,6 +206,7 @@ export default function PricingPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-muted">
+      <Header />
       {/* Header */}
       <div className="container mx-auto px-4 pt-24 pb-16">
         {/* Limited Time Banner */}
@@ -418,10 +420,6 @@ export default function PricingPage() {
           </div>
         </div>
 
-        {/* Footer Note */}
-        <div className="mt-16 text-center text-sm text-muted-foreground">
-          <p>imgeditor.co is an independent product and is not affiliate with Google or any of its brands</p>
-        </div>
       </div>
     </div>
   )
